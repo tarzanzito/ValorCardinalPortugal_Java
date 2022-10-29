@@ -362,14 +362,16 @@ public class ValorCardinalPortugal {
 				else
 					resultado = CARDINAL_UMA;
 				resultado += " " + CARDINAL_GRUPOS_SINGULAR[nivel];
-			} else if (valor == CARDINAL_DOIS) {
-				if (CARDINAL_GRUPOS_MASCULINO[nivel])
-					resultado = CARDINAL_DOIS;
-                else
-                    resultado = CARDINAL_DUAS;
-                resultado += " " + CARDINAL_GRUPOS_PLURAL[nivel];
 			} else
-				resultado = valor + " " + CARDINAL_GRUPOS_PLURAL[nivel];
+				if (valor == CARDINAL_DOIS) {
+					if (CARDINAL_GRUPOS_MASCULINO[nivel])
+						resultado = CARDINAL_DOIS;
+					else
+						resultado = CARDINAL_DUAS;
+					resultado += " " + CARDINAL_GRUPOS_PLURAL[nivel];
+				} else
+					resultado = valor + " " + CARDINAL_GRUPOS_PLURAL[nivel];
+
 			break;
 		}
 
@@ -424,17 +426,19 @@ public class ValorCardinalPortugal {
 		int pos = valor.indexOf(".");
 		if (pos == -1)
 			resultado += ".00";
-		else if (pos == 0)
-			resultado = "0" + resultado;
+		else
+			if (pos == 0)
+				resultado = "0" + resultado;
 
 		pos = resultado.indexOf(".");
 		int rlen = resultado.length() - pos;
 		if (rlen == 1)
 			resultado += "00";
-		else if (rlen == 2)
-			resultado += "0";
 		else
-			resultado = resultado.substring(0, pos + 3);
+			if (rlen == 2)
+				resultado += "0";
+			else
+				resultado = resultado.substring(0, pos + 3);
 
 		return resultado.trim();
 	}
